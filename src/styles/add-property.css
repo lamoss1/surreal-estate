@@ -1,0 +1,18 @@
+.add-property {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: black;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.add-property label {
+  margin: 10px;
+  padding: 10px;
+  background-color: purple;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
