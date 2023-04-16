@@ -9,7 +9,7 @@
   background-color: green;
   width: 500px;
   height: 50%;
-  align-items: center;
+  /* align-items: center; */
 }
 .navbar-links-item {
   display: flex;

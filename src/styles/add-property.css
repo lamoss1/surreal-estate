@@ -1,10 +1,12 @@
 .add-property {
   padding: 10px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
   background-color: black;
   align-items: center;
   justify-content: space-around;
+  margin-top: 200px;
 }
 
 .add-property label {
@@ -15,4 +17,5 @@
   margin-right: 10px;
   padding-left: 10px;
   padding-right: 10px;
+  align-items: baseline;
 }

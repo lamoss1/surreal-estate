@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/add-property.css";
-import axios from "axios";
+import postProperty from "../requests/postProperty";
+// import { useAxios } from "use-axios-client";
 
 const AddProperty = () => {
   const initialState = {
@@ -16,22 +17,25 @@ const AddProperty = () => {
   };
 
   const [fields, setFields] = useState(initialState.fields);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleAddProperty = (event) => {
+  const handleAddProperty = async (event) => {
     event.preventDefault();
-    axios.get({
-      method: "post",
-      url: "./http://localhost:3000/api/v1/PropertyListing",
-      data: {
-        title: "3 bedroom bungalow",
-        type: "bungalow",
-        bedrooms: "3",
-        bathrooms: "2",
-        price: "400",
-        city: "Manchester",
-        email: "yo@gmail.com",
-      },
-    });
+    const { title, city, type, bedrooms, bathrooms, price, email } = fields;
+    if (
+      title &&
+      city &&
+      type &&
+      bedrooms > 0 &&
+      bathrooms > 0 &&
+      price > 0 &&
+      email
+    ) {
+      const results = await postProperty(fields);
+      setErrorMessage(results);
+      return;
+    }
+    setErrorMessage("Information Missing!");
   };
 
   const handleFieldChange = (event) => {
@@ -84,7 +88,66 @@ const AddProperty = () => {
             <option value="Bungalow">Bungalow</option>
           </select>
         </label>
+
+        <label htmlFor="bedrooms">
+          Bedrooms
+          <input
+            type="number"
+            id="bedrooms"
+            name="bedrooms"
+            value={fields.bedrooms}
+            onChange={handleFieldChange}
+            placeholder="0"
+            step="1"
+            min="0"
+            max="9"
+          />
+        </label>
+
+        <label htmlFor="bathrooms">
+          Bathrooms
+          <input
+            type="number"
+            id="bathrooms"
+            name="bathrooms"
+            value={fields.bathrooms}
+            onChange={handleFieldChange}
+            placeholder="0"
+            step="1"
+            min="0"
+            max="9"
+          />
+        </label>
+
+        <label htmlFor="price">
+          Price
+          <input
+            type="number"
+            id="price"
+            name="price"
+            value={fields.price}
+            onChange={handleFieldChange}
+            placeholder="0"
+            step="1000"
+            min="0"
+          />
+        </label>
+
+        <label htmlFor="email">
+          Email
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={fields.email}
+            onChange={handleFieldChange}
+            placeholder="john.smith@email.co.uk"
+          />
+        </label>
+
+        <button type="submit">Add</button>
       </form>
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
 };
